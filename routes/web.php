@@ -18,10 +18,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('ticket', TicketController::class);
+
+    Route::get('/ticket/show/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
+    Route::patch('/ticket/changeState/{ticket}', [TicketController::class, 'changeState'])->name('ticket.changeState');
+    Route::get('/ticket/assign/{ticket}', [TicketController::class, 'assign'])->name('ticket.assign');
+
     Route::get('/chatbox/{ticket_id}', [ChatboxController::class, 'show'])->name('chatbox.show');
     Route::patch('/chatbox/store', [ChatboxController::class, 'store'])->name('chatbox.store');
-    Route::get('/ticket/show/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
-    Route::get('/ticket/assign/{ticket}', [TicketController::class, 'assign'])->name('ticket.assign');
+
 });
 
 require __DIR__.'/auth.php';

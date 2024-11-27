@@ -100,8 +100,18 @@ class TicketController extends Controller
     public function assign(Request $request, Ticket $ticket)
     {
         $ticket->assigned_to = $request->user;
+        $ticket->state='assigned';
         $ticket->save();
 
         return redirect()->route('ticket.index')->with('tickets');
+    }
+
+    public function changeState(Request $request, Ticket $ticket)
+    {
+        $ticket->state=$request->state;
+        $ticket->save();
+
+        return redirect()->route('ticket.index')->with('tickets');
+
     }
 }

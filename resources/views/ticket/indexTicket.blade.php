@@ -7,6 +7,7 @@
             <tr>
                 <th>Titre</th>
                 <th>Catégorie</th>
+                <th>État</th>
                 <th>Priorité</th>
                 <th>Actions</th>
             </tr>
@@ -17,6 +18,7 @@
             <tr>
                 <td>{{$ticket->title}}</td>
                 <td>{{$ticket->categories->name}}</td>
+                <td>{{$ticket->state}}</td>
                 <td class="w-[80px]"><span class="block w-2 h-2 rounded-full float-left mt-2 mr-2
                 @if ($ticket->priorities->name == 'low')
                     bg-green-500
@@ -39,6 +41,18 @@
                         <button type="submit" class="p-2 text-white bg-red-500 rounded-xl">Supprimer</button>
                     </form>
                     @endif
+                    <form method="post" action="{{route('ticket.changeState', ['ticket' => $ticket])}}">
+                        @method('patch')
+                        @csrf
+                        <input type="hidden" name="state" value='finished'>
+                        <button type="submit" class="p-2 text-white bg-blue-500 rounded-xl">Terminer</button>
+                    </form>
+                    <form method="post" action="{{route('ticket.changeState', ['ticket' => $ticket])}}">
+                        @method('patch')
+                        @csrf
+                        <input type="hidden" name="state" value='canceled'>
+                        <button type="submit" class="p-2 text-white bg-orange-500 rounded-xl">Annuler</button>
+                    </form>
                     <x-button link="{{route('chatbox.show', ['ticket_id' => $ticket->id])}}">CHAT</x-button>
                     @if(Auth::user()->isAn('admin') && $ticket->assigned_to == null)
                     <form method="post" action="{{ route('ticket.assign', ['ticket' => $ticket]) }}">
