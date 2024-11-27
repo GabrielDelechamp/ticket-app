@@ -1,34 +1,53 @@
-Les comptes de connexions sont les suivants :
-Admin : 
-mail: admin@admin.com 
-mdp: password 
-Client : 
-mail: client@client.com 
-mdp: password 
-Dev : 
-mail: dev@dev.com 
-mdp: password 
+# Application de Gestion de Tickets  
 
-Ce qui a été fait : 
-Le client se connecte à l'application, il peut voir ses tickets et les gérer et il peut créer un nouveau ticket.
+## Comptes de Connexion  
 
-La saisie d'un ticket implique de renseigner a minima un titre, un texte explicatif, une catégorie et un priorité. Le statut est alors positionné à "Ouvert". 
+### Admin  
+- **Email** : admin@admin.com  
+- **Mot de passe** : password  
 
-L'administrateur se connecte à l'application et peut voir l'ensemble des tickets, leur état et les affecter à un développeur.
+### Client  
+- **Email** : client@client.com  
+- **Mot de passe** : password  
 
-Le développeur se connecte à l'application et peut voir l'ensemble des tickets qui lui sont affectés et non résolus.
-Le développeur peut ajouter un commentaire à un ticket, le client est alors notifié par mail.
-Plusieurs échange entre le client et le développeur peuvent intervenir avec à chaque la mise en place d'un commentaire 
+### Développeur  
+- **Email** : dev@dev.com  
+- **Mot de passe** : password  
 
-Lorsqu'un ticket est affecté à un développeur le ticket passe au statut "Affecté"
+---
 
-Le client une fois le ticket résolu peut passer le ticket au statut "Terminé". Il a aussi la possibilité de l'annuler, le ticket passera au statut "Annulé"
+## Fonctionnalités Implémentées  
 
-Ce qui n'a pas été fait : 
-Lorsque qu'un ticket est créé, les administrateurs sont notifiés par mail
-Lorsque qu'un ticket est créé, le développeur en charge du ticket est notifié
-Une pièce jointe pourra être transmise si besoin.
-Lorsqu'un ticket est affecté à un développeur celui-ci est notifié par mail 
+### Client  
+- Connexion à l'application.  
+- Consultation et gestion de ses propres tickets.  
+- Création d'un nouveau ticket avec les champs obligatoires suivants :  
+  - **Titre**  
+  - **Texte explicatif**  
+  - **Catégorie**  
+  - **Priorité**  
+  - Le statut est automatiquement défini à **"Ouvert"**.  
+- Possibilité de modifier le statut d'un ticket à **"Terminé"** une fois résolu ou à **"Annulé"** en cas d'abandon.  
 
-Les échanges peuvent êtres accompagnés d'une pièce jointe de manière facultative.
+### Administrateur  
+- Connexion à l'application.  
+- Visualisation de tous les tickets avec leurs détails et leur état.  
+- Attribution des tickets à un développeur. Le statut du ticket passe alors à **"Affecté"**.  
+
+### Développeur  
+- Connexion à l'application.  
+- Consultation de tous les tickets qui lui sont affectés et qui ne sont pas résolus.  
+- Ajout de commentaires à un ticket. Le client est automatiquement notifié par email.  
+- Gestion des échanges avec le client via des commentaires.  
+
+---
+
+## Fonctionnalités Non Implémentées  
+
+- **Notifications Mail** :  
+  - Les administrateurs ne sont pas notifiés par email lors de la création d'un ticket.  
+  - Le développeur affecté à un ticket n'est pas notifié par email.  
+- **Pièces Jointes** :  
+  - Les échanges entre le client et le développeur ne peuvent pas encore inclure de pièces jointes.  
+  - Il n'est pas possible d'ajouter des pièces jointes lors de la création d'un ticket.  
 
