@@ -13,10 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // (new BouncerSeeder)->run();
+        (new BouncerSeeder)->run();
         (new CategorySeeder)->run();
         (new PrioritySeeder)->run();
         (new UserSeeder)->run();
         (new TicketSeeder)->run();
+        (new ChatboxSeeder)->run();
     }
 }

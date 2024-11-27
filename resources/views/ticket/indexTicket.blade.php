@@ -1,5 +1,7 @@
 <x-app-layout>
-<x-button link="{{route('ticket.create')}}" class="bg-cyan-500">Ajouter</x-button>
+    @if (Auth::user()->can('ticket-create'))
+    <x-button link="{{route('ticket.create')}}" class="bg-cyan-500">Ajouter</x-button>
+    @endif
     <table class="text-white">
         <thead>
             <tr>
@@ -11,6 +13,7 @@
         </thead>
         <tbody>
             @foreach ($tickets as $ticket)
+            @if(Auth::user()->isA('client') && Auth::user()->id==$ticket->submitted_by || Auth::user()->isAn('admin') || Auth::user()->isA('dev') && Auth::user()->id==$ticket->assigned_to)
             <tr>
                 <td>{{$ticket->title}}</td>
                 <td>{{$ticket->categories->name}}</td>
@@ -23,15 +26,37 @@
                     bg-red-500
                 @endif"></span>{{$ticket->priorities->name}}</td>
                 <td class='flex gap-2'>
+                    @if (Auth::user()->can('ticket-retrieve'))
                     <x-button link="{{ route('ticket.show', ['ticket' => $ticket]) }}" class="bg-green-500">Détail</x-button>
+                    @endif
+                    @if (Auth::user()->can('ticket-update'))
                     <x-button link="{{ route('ticket.edit', ['ticket' => $ticket]) }}" class="bg-yellow-500">Éditer</x-button>
+                    @endif
+                    @if (Auth::user()->can('ticket-delete'))
                     <form method="post" action="{{ route('ticket.destroy', ['ticket' => $ticket]) }}">
                         @method('delete')
                         @csrf
                         <button type="submit" class="p-2 text-white bg-red-500 rounded-xl">Supprimer</button>
                     </form>
+                    @endif
+                    <x-button link="{{route('chatbox.show', ['ticket_id' => $ticket->id])}}">CHAT</x-button>
+                    @if(Auth::user()->isAn('admin') && $ticket->assigned_to == null)
+                    <form method="post" action="{{ route('ticket.assign', ['ticket' => $ticket]) }}">
+                        @method('get')
+                        @csrf
+                        <select name="user" class="text-black">
+                            @foreach ($users as $user)
+                                @if ($user->isA('dev'))
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        <button type="submit" class="p-2 text-white bg-purple-500 rounded-xl">Assigner</button>
+                    </form>
+                    @endif
                 </td>
             </tr>
+            @endif
             @endforeach
         </tbody>
     </table>

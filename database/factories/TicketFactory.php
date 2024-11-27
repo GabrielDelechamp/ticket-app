@@ -27,7 +27,6 @@ class TicketFactory extends Factory
             'category_id' => Category::inRandomOrder()->value('id'),
             'priority_id' => Priority::inRandomOrder()->value('id'),
             'submitted_by' => User::inRandomOrder()->value('id'),
-            'assigned_to' => User::inRandomOrder()->value('id'),
         ];
     }
 }

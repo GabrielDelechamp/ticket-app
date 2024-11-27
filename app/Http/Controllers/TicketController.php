@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use App\Models\Category;
 use App\Models\Priority;
+use App\Models\Chatbox;
 use Illuminate\Http\Request;
+
+use App\Models\User;
 
 class TicketController extends Controller
 {
@@ -15,7 +18,9 @@ class TicketController extends Controller
     public function index()
     {
         $tickets = Ticket::all();
-        return view('ticket.indexTicket', compact('tickets'));
+        $users = User::all();
+        $messages = Chatbox::all();
+        return view('ticket.indexTicket', compact('tickets', 'users', 'messages'));
     }
 
     /**
@@ -33,7 +38,6 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        $tickets = Ticket::all();
 
         $ticket=New Ticket;
         $ticket->title = $request->title;
@@ -42,6 +46,8 @@ class TicketController extends Controller
         $ticket->priority_id = $request->priority_id;
         $ticket->submitted_by = $request->submitted_by;
         $ticket->save();
+
+        $tickets = Ticket::all();
 
         return view('ticket.indexTicket', compact('tickets'));
 
@@ -52,9 +58,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-
         return view('ticket.detailTicket', compact('ticket'));
-
     }
 
     /**
@@ -91,5 +95,13 @@ class TicketController extends Controller
     {
         $ticket->delete();
         return redirect()->route('ticket.index');
+    }
+
+    public function assign(Request $request, Ticket $ticket)
+    {
+        $ticket->assigned_to = $request->user;
+        $ticket->save();
+
+        return redirect()->route('ticket.index')->with('tickets');
     }
 }
